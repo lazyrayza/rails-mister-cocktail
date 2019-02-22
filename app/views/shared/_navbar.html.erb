@@ -1,0 +1,28 @@
+<div class="navbar-wagon navbar-expand-sm navbar-light navbar-lewagon" class="fixed-top">
+  <%= link_to "#", class: "navbar-wagon-brand" do %>
+    <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
+    <% end %>
+
+  <button class="navbar-wagon" class="navbar-wagon navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <div class="navbar-wagon" class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-wagon navbar-nav mr-auto">
+      <li class="navbar-wagon nav-item active">
+        <%= link_to "Home", "#", class: "nav-link" %>
+      </li>
+      <li class="navbar-wagon nav-item">
+        <%= link_to "Messages", "#", class: "nav-link" %>
+      </li>
+      <li class="navbar-wagon nav-item dropdown">
+        <%= image_tag "https://avatars3.githubusercontent.com/u/45258443?v=4", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+        <div class="navbar-wagon dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <%= link_to "Action", "#", class: "dropdown-item" %>
+          <%= link_to "Another action", "#", class: "dropdown-item" %>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

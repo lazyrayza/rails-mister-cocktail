@@ -5,16 +5,38 @@ Ingredient.destroy_all
 puts "Destroy Cocktails"
 Cocktail.destroy_all
 
-lemon = Ingredient.create(name: "lemon")
-mint = Ingredient.create(name: "mint")
-chocolate = Ingredient.create(name: "chocolate")
-chilli = Ingredient.create(name: "chilli")
+require 'open-uri'
+require 'faker'
 
-big_lemon = Cocktail.create(name: "Big Lemon")
-mint_mix = Cocktail.create(name: "Mint Mix")
-choc_cake = Cocktail.create(name: "Chocolate Cake")
-sweet_fire = Cocktail.create(name: "Swee Fire")
+# populate ingredients
+url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list'
+ingredients = JSON.parse(open(url).read)
 
-Dose.create(cocktail: big_lemon, ingredient: mint, description: "Lemon and Mint goodness")
-Dose.create(cocktail: choc_cake, ingredient: chocolate, description: "Chocolate & whisky, name a better mix")
-Dose.create(cocktail: sweet_fire, ingredient: chilli, description: "I lied, found a better mix")
+ingredients["drinks"].each do |ingredient|
+  i = Ingredient.create(name: ingredient["strIngredient1"])
+  puts "creating an ingredient #{i.name}"
+end
+
+# populate cocktails
+cocktails = Array.new(20) { Faker::FunnyName.two_word_name }
+
+cocktails.each do |cocktail|
+  c = Cocktail.create(name: cocktail)
+  puts "created a cocktail #{c.name}"
+end
+
+# create some doses for each cocktails
+Cocktail.all.each do |cocktail|
+  # get all the ingredient ids that are available (we'll need this later)
+  ingredient_ids = Ingredient.pluck(:id)
+
+  # pick a random number of ingredients between 2-5
+  number_of_ingredients = rand(3) + 2
+
+  # add that many doses
+  number_of_ingredients.times do
+    # add a random measurement, also assign the cocktail and a random ingredient
+    Dose.create(description: Faker::Measurement.metric_volume, cocktail: cocktail, ingredient: Ingredient.find(ingredient_ids.sample))
+    puts "added a dose to #{cocktail.name}"
+  end
+end
